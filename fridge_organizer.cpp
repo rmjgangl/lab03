@@ -70,7 +70,7 @@ bool FridgeOrganizer::add_meal_portion(string n_name, string n_expiry) {
     stack<MealPortion*> *last = stacks.back();
     
     // step3 if the stacks list is not empty and there is space in the current stack
-    if (!stacks.empty() && last->size() < stack_capacity) {
+    if (!stacks.empty() && last && last->size() < stack_capacity) {
         // step3.1 insert the new meal into the current stack
         last->push(temp);
     } else if (stacks.size() < usable_stacks) {
@@ -89,7 +89,6 @@ bool FridgeOrganizer::add_meal_portion(string n_name, string n_expiry) {
         delete temp;
         return false; //potential leak of memory pointed to by 'temp'
     }
-    
     // step6 return true if addition was successful
     return true;
 }
@@ -124,7 +123,6 @@ FridgeOrganizer::MealPortion FridgeOrganizer::remove_meal_portion() {
         delete last;
         stacks.pop_back();
     }
-    
     // step7 return corresponding m value
     return m;
 }
@@ -163,7 +161,6 @@ FridgeOrganizer::MealPortion FridgeOrganizer::find_meal_portion_by_expiry() {
             cur_stack.pop();
         }
     }
-    
     // step4 return corresponding min value
     return min;
 }
